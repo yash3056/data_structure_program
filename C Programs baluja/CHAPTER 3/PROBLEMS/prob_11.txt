@@ -1,0 +1,124 @@
+
+/* Program to check if the brackets in a given
+   expression are balanced using stack!*/
+
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+//Declaration of structures forming stack
+struct stack
+  {
+    char *expr;
+    int top;
+  };
+
+/* Declaration of functions */
+
+//Function to create a stack
+void createStack(struct stack *,int);
+
+//Function to push an element in stack
+void push(struct stack *,char);
+
+//Function to pop an element from a stack
+char pop(struct stack *);
+
+//Main function
+void main()
+{
+   struct stack stk;
+   int len,i,crcl,crly,sqr;
+   char ch,exprsn[50];
+   clrscr();
+   crcl=crly=sqr=0;
+   //Getting expression from user
+   printf("Enter an expression: ");
+   gets(exprsn);
+   len=strlen(exprsn); //Determining it's length
+   //If length is zero, the expression is empty
+   if(len==0)
+      {
+	 printf("You entered an empty expression!");
+	 getch();
+	 exit();
+      }
+   createStack(&stk,len); //Function call
+   //Pushing expression into the stack
+   for(i=0;i<len;i++)
+      push(&stk,exprsn[i]); //Function call
+   //Popping out each character one by one
+   for(i=0;i<len;i++)
+      {
+	ch=pop(&stk); //Function call
+	if(ch=='[')
+	   sqr++;
+	if(ch==']')
+	   sqr--;
+	if(ch=='(')
+	   crcl++;
+	if(ch==')')
+	   crcl--;
+	if(ch=='{')
+	   crly++;
+	if(ch=='}')
+	   crly--;
+      }
+   if((sqr==0)&&(crcl==0)&&(crly==0))
+      printf("The expression is balanced!");
+   else
+      {
+	 if(sqr>0)
+	    printf("Closing missing for [\n");
+	 if(sqr<0)
+	    printf("Opening missing for ]\n");
+	 if(crcl>0)
+	    printf("Closing missing for (\n");
+	 if(crcl<0)
+	    printf("Opening missing for )\n");
+	 if(crly>0)
+	    printf("Closing missing for {\n");
+	 if(crly<0)
+	    printf("Opening missing for }\n");
+      }
+   getch();
+}
+
+void createStack(struct stack *stck,int len)
+{
+   //Initialising top to -1
+   stck->top=-1;
+   //Allocating memory for exprsn
+   stck->expr=(char *)malloc(len*sizeof(char));
+   //Checking allocation of memory
+   if(stck->expr==NULL)
+     {
+       printf("Memory allocation failed!");
+       exit();
+     }
+}
+
+void push(struct stack *stck,char ch)
+{
+   stck->top++; //Incrementing top
+   //Inserting character in incremented index
+   stck->expr[stck->top]=ch;
+}
+
+char pop(struct stack *stck)
+{
+   //Retrieving character at the top of stack
+   char ch=stck->expr[stck->top];
+   stck->top--; //Decrementing top
+   return ch; //Returning that character
+}
+
+
+
+/*output of the program*/
+enter the expression
+1-2+6*9
+the expression is balanced
+
+
+

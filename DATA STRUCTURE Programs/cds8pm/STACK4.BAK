@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+#define SIZE 5
+struct Node
+{
+  int info;
+  struct Node *next;
+};
+struct Node *top=NULL;
+
+void push(int item)
+{
+    struct Node *newnode;
+    newnode=(struct Node *)malloc(sizeof(struct Node));
+    newnode->info=item;
+    newnode->next=top;
+    top=newnode;
+    printf("\nThe number %d pushed into the stack",top->info);
+}
+/////////////////////////////////////////////////////
+void pop()
+{
+  struct Node *current;
+  if(top==NULL)
+    printf("\nStack underflow");
+  else
+   {
+     current=top;
+     top=top->next;
+     printf("\nThe number %d popped from the stack",current->info);
+     free(current);
+   }
+}
+/////////////////////////////////////////////////////
+void display()
+{
+  struct Node *current;
+  if(top==NULL)
+    printf("\nStack underflow");
+  else
+   {
+     current=top;
+     printf("\nThe numbers in stack are :");
+     while(current!=NULL)
+     {
+       printf("\n%d ",current->info);
+       current=current->next;
+     }
+   }
+}
+
+void main()
+{
+  int ch,num;
+  while(1)
+  {
+   clrscr();
+   printf("\n                 Stack Menu");
+   printf("\n              -----------------");
+   printf("\n              1. Push");
+   printf("\n              2. Pop");
+   printf("\n              3. Display stack");
+   printf("\n              4. Exit");
+   printf("\n\nEnter your choice (1-4) : ");
+   scanf("%d",&ch);
+   switch(ch)
+   {
+     case 1:
+	  printf("\nEnter number to be pushed : ");
+	  scanf("%d",&num);
+	  push(num);
+	  break;
+     case 2:
+	  pop();
+	  break;
+     case 3:
+	  display();
+	  break;
+     case 4:
+	  return;
+     default:
+	 printf("\nInvalid choice");
+	 break;
+   }
+  printf("\nPress any key....");
+  getch();
+  }
+}
+

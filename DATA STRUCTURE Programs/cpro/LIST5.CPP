@@ -1,0 +1,121 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+struct Node
+{
+  int coeff;
+  int expo;
+  struct Node *next;
+};
+struct Node *start=NULL;
+struct Node *list1,*list2,*list3;
+/////////////////////////////////////////////////////////////////
+void printlist()
+{
+  struct Node *current;
+  current=start;
+  if(current==NULL)
+   printf("\nThe list is empty");
+  else
+  {
+    while(current!=NULL)
+    {
+      if(current->next==NULL)
+      printf("%dx%d  ",current->coeff,current->expo);
+      else
+      printf("%dx%d + ",current->coeff,current->expo);
+      current=current->next;
+    }
+  }
+}
+///////////////////////////////////////////////////////////////////////////
+void addlast(int coeff,int expo)
+{
+   struct Node *newnode,*current;
+   newnode=(struct Node *)malloc(sizeof(struct Node));
+   newnode->coeff=coeff;
+   newnode->expo=expo;
+   newnode->next=NULL;
+   if(start==NULL)
+    start=newnode;
+   else
+    {
+      current=start;
+      while(current->next!=NULL)
+      {
+       current=current->next;
+      }
+      current->next=newnode;
+    }
+}
+//////////////////////////////////////////////////////////////////////
+void polyadd()
+{
+  struct Node *c1,*c2;
+  c1=list1;
+  c2=list2;
+  while(c1!=NULL && c2!=NULL)
+  {
+     if(c1->expo > c2->expo)
+     {
+      addlast(c1->coeff,c1->expo);
+      c1=c1->next;
+     }
+     else if(c2->expo > c1->expo)
+     {
+       addlast(c2->coeff,c2->expo);
+       c2=c2->next;
+     }
+     else
+     {
+       addlast(c1->coeff+c2->coeff,c1->expo);
+       c1=c1->next;
+       c2=c2->next;
+     }
+  }
+  while(c1!=NULL)
+  {
+     addlast(c1->coeff,c1->expo);
+     c1=c1->next;
+  }
+  while(c2!=NULL)
+  {
+      addlast(c2->coeff,c2->expo);
+      c2=c2->next;
+  }
+  list3=start;
+}
+
+void main()
+{
+  clrscr();
+  addlast(4,4);
+  addlast(7,3);
+  addlast(4,2);
+  addlast(5,1);
+  addlast(2,0);
+  list1=start;
+
+  start=NULL;
+  addlast(7,4);
+  addlast(3,3);
+  addlast(2,2);
+  addlast(4,1);
+  list2=start;
+
+  start=NULL;
+  polyadd();
+
+  start=list1;
+  printlist();
+
+  printf("\n");
+  start=list2;
+  printlist();
+
+  printf("\n\-------------------------------\n");
+  start=list3;
+  printlist();
+
+  getche();
+}

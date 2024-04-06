@@ -1,0 +1,59 @@
+#include<vivek.h>
+void main()
+{
+ int i,j=0;
+ int y[5][6];
+ clrscr();
+ printf("x");
+ for (i=0;i<5;i++)
+ {
+ scanf("%d",&y[i][0]);
+ }
+ printf("y");
+ for(i=0;i<5;i++)
+ {
+  scanf("%d",&y[i][1]);
+ }
+ for(i=0;i<5;i++)
+ {
+  if(i<4)
+   y[i][2]=y[i+1][1]-y[i][1];
+ else
+ y[i][2]=0;
+ }
+  for(i=0;i<5;i++)
+ {
+  if(i<3)
+  y[i][3]=y[i+1][2]-y[i][2];
+  else
+  y[i][3]=0;
+ }
+  for(i=0;i<5;i++)
+ {
+  if(i<2)
+  y[i][4]=y[i+1][3]-y[i][3];
+  else
+  y[i][4]=0;
+ }
+  for(j=0;j<5;j++)
+ {
+  if(j<1)
+  y[j][5]=y[j+1][4]-y[j][4];
+ else
+  y[j][5]=0;
+ }
+ printf("\n");
+  for(i=0;i<5;i++)
+ {
+  for(j=0;j<6;j++)
+  {
+  if(i==0)
+  {
+   printf("%dy",j);
+  }
+   printf("%d\t",y[i][j]);
+   }
+  printf("\n");
+ }
+ getch();
+}

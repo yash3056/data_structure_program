@@ -1,0 +1,224 @@
+
+/*This file contains program to implement Stack which can grow by
+a fixed percentage to avoid overflow condition upto a maximum
+limit for growth, with operations: Push, Pop, isEmpty and isFull.*/
+
+#include<stdio.h>
+
+//FUNCTION FOR PUSHING
+void Push(int *arr, int data, int *tos);
+
+//FUNCTION FOR POPPING
+int Pop(int *arr, int *tos);
+
+
+//CHECK IF THE STACK IS EMPTY
+int isEmpty(int tos);
+
+
+//CHECK IF THE STACK IS FULL
+int isFull2(int tos, int Size);
+
+
+
+//MAIN FUNCTION 
+int main()
+{
+   int *array=NULL,size=0,Tos,value,choice;
+
+   Tos=-1;
+
+   do
+   {
+      clrscr();
+      printf("\n\n\n\n\t\t 1. PUSH");
+      printf("\n\n\n\t\t 2. POP");
+      printf("\n\n\n\t\t 3. POP ENTIRE STACK");
+      printf("\n\n\n\t\t 0. EXIT");
+
+      printf("\n\n\n\t\t ENTER YOUR CHOICE: ");
+      scanf("%d",&choice);
+
+      switch(choice)
+      {
+ 
+     case 1:
+		clrscr();
+		value=isFull2(Tos,size);   // Checking stack overflow.
+
+		if(value==0)     // If stack is full.
+		{
+		   if(size==0)
+		      size=1;
+		   else if(size==1)   // If size of stack is 1.
+		      size=2;    // Set size=2
+		   else
+		      size+=(size/2);   // Increase size by 50%.
+
+		}
+
+		/* If increased size is less than maximum growth
+		   limit (i.e. 95) */
+		if(size<95)
+		{
+		   if(value==0)  // If stack is full.
+		   {
+		      if(size==1)   // If stack is empty.
+			 array=(int *)malloc(sizeof(int));
+		      else
+			 // Growing stack by 50% to avoid overflow.
+			 array=(int *)realloc(array,size*sizeof(int));
+
+		      if(array==NULL)   // If memory not allocated.
+		      {
+			 clrscr();
+			 printf("\n\n\n\t ERROR: INSUFFICIENT MEMORY SPACE");
+			 getch();
+			 exit(1);
+		      }
+		   }
+
+		   printf("\n\n\n\n\t\t ENTER VALUE TO BE PUSHED: ");
+		   scanf("%d",&value);
+
+		   Push(array,value,&Tos);   // Pushing element on stack.
+		}
+
+		/* If increased size is greater than maximum growth
+		   limit (i.e. 95) */
+		else
+		{
+		   printf("\n\n\n\n\t\t ERROR: STACK OVERFLOW.");
+		   getch();
+		}
+		break;
+
+      case 2:
+		clrscr();
+
+		value=isEmpty(Tos);   // Checking stack underflow.
+
+		if(value==1)
+		{
+		   value=Pop(array,&Tos);//FUNCTION CALL
+
+		   printf("\n\n\n\n\t\t POPED VALUE = %d",value);
+
+		}
+		else
+
+		   printf("\n\n\n\n\t\t ERROR: STACK UNDERFLOW.");
+
+
+		getch();
+
+		break;
+
+      case 3:
+
+		clrscr();
+
+		value=isEmpty(Tos);   // Checking stack underflow.
+
+		if(value==1)
+		{
+		   printf("\n\n\n\n\t STACK ELEMENTS:");
+
+		   while(Tos>-1)//TILL THE END
+		   {
+                     /*KEEP ON POPPING AND PRINTING*/ 
+		      value=Pop(array,&Tos);
+		      printf("\n\n\t\t %d",value);
+		   }
+		}
+		else
+		   printf("\n\n\n\n\t\t ERROR: STACK UNDERFLOW.");
+
+		getch();
+
+		break;
+
+      case 0:
+		exit(0);
+
+      default:
+		clrscr();
+
+		printf("\n\n\n\n\t\t INVALID CHOICE.");
+
+		getch();
+      }
+   }while(choice!=0);
+   return(0);
+}
+
+
+
+
+/* Function to push an element on stack.*/
+void Push(int *arr, int data, int *tos)
+{
+      (*tos)++;           // Incrementing top of stack pointer.
+      arr[*tos]=data;     // Pushing element on the stack.
+}
+
+
+/*Function to pop an element from stack.*/
+int Pop(int *arr, int *tos)
+{
+   int data=arr[*tos];    // Poping element from the stack.
+   (*tos)--;              // Decrementing top of stack pointer.
+   return(data);          // Returning poped element.
+}
+
+
+/* Function to check whether stack is empty or not .*/
+int isEmpty(int tos)
+{
+   if(tos==-1)//CONDITION[to check if the stack is empty]
+      return(0);
+   else
+      return(1);
+}
+
+/*Function to check whether stack is full or not.*/
+int isFull2(int tos, int Size)
+{
+   if(tos==Size-1)//CONDITION[to check if the stack is full]
+      return(0);
+   else
+      return(1);
+}
+
+
+/*output of the program*/
+1. PUSH
+ 2. POP
+ 3. POP ENTIRE STACK
+ 0. EXIT
+
+ ENTER YOUR CHOICE:1
+enter value to be pushed
+2
+element pushed successfully!!
+
+1. PUSH
+ 2. POP
+ 3. POP ENTIRE STACK
+ 0. EXIT
+
+ ENTER YOUR CHOICE:2
+popped element is:2
+
+
+1. PUSH
+ 2. POP
+ 3. POP ENTIRE STACK
+ 0. EXIT
+
+ ENTER YOUR CHOICE:0
+
+
+
+
+

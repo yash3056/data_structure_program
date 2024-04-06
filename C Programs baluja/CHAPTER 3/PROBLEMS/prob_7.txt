@@ -1,0 +1,378 @@
+
+
+/* PROGRAM TO IMPLEMENT A DOUBLE STACK USING AN ARRAY.
+   THE TWO STACK GROW IN OPPOSITE DIRECTIONS FROM TWO
+   FIXED ENDS OF THE ARRAY.*/
+
+//INCLUDE HEADER FILES
+#include<stdio.h>
+#include<conio.h>
+
+#define MAX 8//THIS VALUE REMAINS CONSTANT
+
+typedef struct DoubleStack//declaration of structure
+{
+ int Arr[MAX];/*array for defining a stack*/
+ int top[2];
+}dblstk;
+
+
+/* Declaration of functions */
+
+//Function to display the menu
+void menu();
+
+//Function to initialise the double stack
+void initdbstk(dblstk *);
+
+//Function to add an element in the first stack
+int pushBeg(dblstk *,int );
+
+//Function to add an element in the second stack
+int pushEnd(dblstk *,int );
+
+//Function to serve an element from the first stack
+int popBeg(dblstk *,int *);
+
+//Function to serve an element from the second stack
+int popEnd(dblstk *,int *);
+
+//Function to check if the double stack is empty
+int IsEmpty(dblstk );
+
+//Function to check if the first stack is empty
+int IsEmptyStk1(dblstk );
+
+//Function to check if the second stack is empty
+int IsEmptyStk2(dblstk );
+
+//Function to check if the double stack is full
+int IsFull(dblstk );
+
+//Function to check if the first stack is full
+int IsFullStk1(dblstk );
+
+//Function to check if the second stack is full
+int IsFullStk2(dblstk );
+
+//Function to display the double stack elements
+void display (dblstk );
+
+//MAIN FUNCTION
+void main()
+{
+ clrscr();//clears the user screen
+
+ menu(); //Function call
+ getch();
+}
+
+void menu()
+{
+
+ dblstk dst;
+
+ int info,choice,call,flag;
+
+
+ call=flag=0;
+
+ initdbstk(&dst);//FUNCTION CALL
+
+ while(1)
+ {
+  clrscr();
+  printf("********MENU********\n");
+  printf("1. Push in first stack!\n");
+  printf("2. Push in second stack!\n");
+  printf("3. Pop from first stack!\n");
+  printf("4. Pop from second stack!\n");
+  printf("5. To check if the stack is empty!\n");
+  printf("6. To check if the stack is full!\n");
+  printf("7. Display!\n");
+  printf("8. Exit!\n");
+
+  printf("Your choice: ");
+  scanf("%i",&choice);
+
+  switch(choice)
+  {
+ 
+  case 1:printf("Enter the element to be pushed in first stack: ");
+	  scanf("%i",&info);
+
+	  call=pushBeg(&dst,info); //Function call[Push in first stack]
+
+	  if(call)
+	   printf("Element is pushed!");
+	  else
+	   printf("Element can't be pushed!");
+
+	  getch();
+	  break;
+
+
+   case 2:printf("Enter the element to be pushed in second stack: ");
+	  scanf("%i",&info);
+
+	  call=pushEnd(&dst,info); //Function call[Push in second stack]
+
+	  if(call)
+	   printf("Element is pushed!");
+	  else
+	   printf("Element can't be pushed!");
+
+	  getch();
+	  break;
+
+
+   case 3:info=popBeg(&dst,&flag); //Function call[Pop from first stack]
+
+	  if(flag)
+	   printf("Popped out element is %i",info);
+	  else
+	   printf("Element can't be popped!");
+
+	  getch();
+	  break;
+
+
+   case 4:info=popEnd(&dst,&flag); //Function call[Pop from second stack]
+
+	  if(flag)
+	   printf("Popped out element is %i",info);
+	  else
+	   printf("Element can't be popped!");
+
+	  getch();
+	  break;
+
+
+    case 5:if(IsEmpty(dst)) //Function call[To check if the stack is empty]
+	    printf("The stack is empty!");
+	   else
+	    printf("The stack is not empty!");
+
+	   getch();
+	   break;
+
+   case 6:if(IsFull(dst)) //Function call[To check if the stack is full]
+	   printf("The stack is full!");
+	  else
+	   printf("The stack is not full!");
+
+	  getch();
+	  break;
+
+   case 7:display(dst); //Function call
+
+	  getch();
+	  break;
+
+   case 8:exit();
+
+   default:printf("You entered wrong choice!");
+	   getch();
+  }
+ }
+}
+
+/*initialization of the double stack*/
+void initdbstk(dblstk *dblst)
+{
+ int i;
+
+ dblst->top[0]=-1;//pointer for the first stack
+
+ dblst->top[1]=MAX;//pointer for the second stack
+
+ for(i=0;i<MAX;i++)//store zero in each index of the array
+  dblst->Arr[i]=0;
+}
+
+
+/*Push in first stack*/
+int pushBeg(dblstk *dblst,int info)
+{
+  //To check if the stack is full
+  if(IsFull(*dblst)) //Function call
+        return 0; //End of function
+
+  //Pushing the element
+  dblst->top[0]++;//first increment the ‘top’ pointer
+
+  dblst->Arr[dblst->top[0]]=info;//then store the element in it
+
+  return 1; //Flag success to the function
+}
+
+/*Push in second stack*/
+int pushEnd(dblstk *dblst,int info)
+{
+
+ //To check if the stack is full
+ if(IsFull(*dblst)) //Function call
+  return 0; //End of function
+
+ //Pushing the element
+ dblst->top[1]--; //first decrement the ‘top’ pointer
+ dblst->Arr[dblst->top[1]]=info;//then store the element at the end of the original one stack
+
+ return 1; //Flag success to the function
+}
+
+/*pop from first stack*/
+int popBeg(dblstk *dblst,int *flag)
+{
+ int info;
+
+ //To check if the first stack is empty
+ if(IsEmptyStk1(*dblst)) //Function call
+ {
+  *flag=0;
+
+  return 0; //End of function
+ }
+
+
+ //Popping out element from the stack
+ info=dblst->Arr[dblst->top[0]];//pop out the element from the stack1
+
+ dblst->Arr[dblst->top[0]]=0;//store zero value 
+
+ dblst->top[0]--;//decrement the 'top' pointer
+
+ *flag=1;
+
+ return info; //Flag success to the function
+}
+
+/*pop from the second stack*/
+int popEnd(dblstk *dblst,int *flag)
+{
+ int info;
+
+ //To check if the second stack is empty
+ if(IsEmptyStk2(*dblst)) //Function call
+ {
+  *flag=0;
+  return 0; //End of function
+ }
+
+
+ //Popping out element from the stack
+ info=dblst->Arr[dblst->top[1]];
+
+ dblst->Arr[dblst->top[1]]=0;//store zero in it
+
+ dblst->top[1]++;//increment the 'top' pointer
+
+ *flag=1;
+
+ return info; //Flag success to the function
+}
+
+/*check if the stack is empty*/
+int IsEmpty(dblstk dblst)
+{
+ if(dblst.top[0]==-1 && dblst.top[1]==MAX)//condition if the stack is empty
+          return 1;
+ else
+  return 0;
+}
+
+/*check if the stack1 is empty*/
+int IsEmptyStk1(dblstk dblst)
+{
+  if(dblst.top[0]==-1)//condition for stack1
+   return 1;
+  else
+   return 0;
+}
+
+/*check if the stack2 is empty*/
+int IsEmptyStk2(dblstk dblst)
+{
+ if(dblst.top[1]==MAX)//condition for stack2
+  return 1;
+ else
+  return 0;
+}
+
+/*check if the stack is full*/
+int IsFull(dblstk dblst)
+{
+ if((dblst.top[1]-dblst.top[0])==1)//condition to check if the stack is full
+  return 1;
+ else
+  return 0;
+}
+
+/*displays the current position of the stack*/
+void display (dblstk dblst)
+{
+ int i;
+ if(IsEmpty(dblst))
+ {
+  printf("The double stack is empty!");
+  return;
+ }
+
+ //Displaying stack 1
+ printf("STACK 1:\n");
+
+ if(IsEmptyStk1(dblst))
+  printf("This stack is empty!");
+
+ else
+ {
+  for(i=0;i<=dblst.top[0];i++)
+   printf("%i\t",dblst.Arr[i]);
+ }
+
+
+//Displaying stack 2
+ printf("\n\nSTACK 2:\n");
+
+ if(IsEmptyStk2(dblst))
+  printf("This stack is empty!");
+ else
+ {
+  for(i=dblst.top[1];i<MAX;i++)
+  printf("%i\t",dblst.Arr[i]);
+ }
+}
+
+
+/*
+OUTPUT
+********MENU********
+1. Push in first stack!
+2. Push in second stack!
+3. Pop from first stack!
+4. Pop from second stack!
+5. To check if the stack is empty!
+6. To check if the stack is full!
+7. Display!
+8. Exit!
+Your choice: 1
+Enter the element to be pushed in first stack: 1
+
+Your choice: 1
+Enter the element to be pushed in first stack: 2
+
+Your choice: 1
+Enter the element to be pushed in first stack: 3 
+
+Your choice: 2
+Enter the element to be pushed in second stack: 4
+
+Your choice: 7
+STACK 1:
+1       2       3
+
+STACK 2:
+4
+*/
+
+

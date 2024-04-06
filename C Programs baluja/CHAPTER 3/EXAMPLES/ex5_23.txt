@@ -1,0 +1,165 @@
+program to implement multiple stacks.
+//include header files
+#include<stdio.h>
+#include<conio.h>
+
+//Check whether stack is empty
+int isempty(int *top,int *base,int stk)
+{
+	if((top[stk-1]==-1)||(top[stk-1]==base[stk-1]))//condition if the stack is empty
+	  return(1);
+	else
+	  return(0);
+}
+
+//Check whether stack is full
+int isfull(int *top,int *base,int stk,int total)
+{
+	if((top[stk-1]==total-1)||(top[stk-1]==base[stk]))//if the stack is full
+	  return(1);
+	else
+	  return(0);
+}
+
+//Push operation(adds element) in stack
+void push(int *array,int *top,int *base,int stk,int total,int info)
+{
+	if(isfull(top,base,stk,total))//check if stack is full
+	{
+	  puts("\n\t*****Stack is full*****\n");
+	  return;
+	}
+	top[stk-1]+=1;//first increement the top pointer befor addition
+
+	array[top[stk-1]]=info;//then push the value on to the stack
+}
+
+//Pop operation(deletes element) in stack
+int pop(int *array,int *top,int *base,int stk)
+{
+	int temp;
+	if(isempty(top,base,stk))//check if stack is empty
+	{
+	  puts("\n\t*****Stack is empty*****\n");
+	  return(NULL);
+	}
+	temp=array[top[stk-1]];//first extract the value from the stack
+
+	top[stk-1]-=1;//then decreement the pointer
+
+	return(temp);//free the memory
+}
+
+//Display stack
+void display(int *array,int *top,int *base,int stk)
+{
+	int i;
+	for(i=top[stk-1];i>base[stk-1];i--)//traverse the complete stack
+	   printf("\n\t%i",array[i]);
+}
+
+
+//Main function
+void main()
+{
+int *stack,*top,*base,num,size,stck,i,total=0,choice,flag=1,data;
+
+	//Number of Stacks
+	puts("\n\tEnter the number of stacks :");
+	scanf("%i",&num);
+
+	/*Dynamic memory allocation*/
+	top=(int *)malloc(num*sizeof(int));
+	base=(int *)malloc(num*sizeof(int));
+
+	//Prompt user to enter size of each stack
+	puts("\n\tEnter the size of each stack:-");
+
+	for(i=0;i<num;i++)
+	{
+	 printf("\n\tStack-%i : ",i+1);
+	 scanf("%i",&size);
+	 top[i]=base[i]=total-1;
+	 total+=size;
+	}
+
+	//Memory allocation for the stack
+	stack=(int *)malloc(total*sizeof(int));
+
+	while(flag)
+	{
+		data=NULL;
+		clrscr();
+		puts("\n\t1:Push Operation");
+		puts("\n\t2:Pop Operation");
+
+		scanf("%d",&choice);
+
+		switch(choice)
+		{
+		   case 1:
+			puts("\n\tEnter the Stack number");
+			scanf("%d",&stck);
+			puts("\n\tEnter the element");
+
+			scanf("%d",&data);
+
+			push(stack,top,base,stck,total,data);//function call
+
+			display(stack,top,base,stck); //function call
+
+			break;
+		   case 2:
+			puts("\n\tEnter the Stack number");
+			scanf("%d",&stck);
+
+			data=pop(stack,top,base,stck); //function call
+
+			printf("\n\tPopped element : %i\n\n",data);
+
+			display(stack,top,base,stck); //function call
+
+			break;
+		   default:
+			break;
+		}
+		puts("\n\tTo Continue Press 1 Else 0 to Exit");
+		scanf("%d",&flag);
+	}
+       /*free all of the memory allocated*/
+	free(top);
+	free(base);
+	free(size);
+	free(stack);
+}
+
+
+/*output of the program*/
+enter the number of stacks:2
+
+enter the size of each stack
+
+stack-1:5
+
+stack-2:5
+
+1:PUSH OPERATION
+2:POP OPERATION
+
+1
+enter the stack number
+1
+entr the element 
+2
+To Continue Press 1 Else 0 to Exit
+1
+
+1:PUSH OPERATION
+2:POP OPERATION
+2
+enter the stack number
+1
+popped element is
+2
+To Continue Press 1 Else 0 to Exit
+0

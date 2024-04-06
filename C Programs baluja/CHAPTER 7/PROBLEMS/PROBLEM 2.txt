@@ -1,0 +1,35 @@
+	void main (void)
+	{
+		node *adj[Max]
+		int n, i,t =0;
+		int n, i, t=0;
+		printf("Enter No. of nodes in Graph:");
+		scanf("%d", &n);
+		create_graph(adj, n);
+		input_graph(adj, n);
+		for(i=1; i<n; i++) color[i]=white;
+		for (i=1; i<=n; i++)
+		{
+			if(color[i]== white)
+			{
+				t++; printf("\n Dfs tree =%d", t);
+				dfs_visit (adj, i);
+			}
+		}
+			delete_graph(adj,n);
+	}
+	void dfs_visit(adj, int v)
+	{
+		int v; node *ptr;
+		color[u]=gray;
+		ptr=adj[u];
+		white (ptr!=null)
+		{
+			v=ptr->vertex;
+			if (color[v]=white)
+				dfs_visit(adj,v);
+			ptr=ptr->link;
+		}
+			printf("%d", v);
+			color[u]= black;
+	}

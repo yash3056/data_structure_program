@@ -1,0 +1,307 @@
+
+/* Program to implement deque using arrays*/
+//include header files 
+#include<stdio.h>
+#include<conio.h>
+
+     int deque[5];
+    long front,rear;
+
+
+
+//Function to initialise the deque
+void initdeque();
+
+//Function to add an element in the beginning
+void enqueBeg(int);
+
+//Function to add an element in the end
+void enqueEnd(int );
+
+//Function to serve an element from the beginning
+void dequeueBeg();
+
+//Function to serve an element from the end
+void dequeueEnd();
+
+//Function to display the deque elements
+void display ( );
+
+
+
+void main()
+{
+ int info,choice;
+
+  //To initialise..
+  initdeque(); //Function call
+
+while(1)//at least it will run for once
+     {
+       //Displaying menu
+       clrscr();
+       printf("        MENU\n");
+       printf("1. En-queue/Append in the beginning\n");
+       printf("2. En-queue/Append in the end\n");
+       printf("3. De-queue/Serve from the beginning\n");
+       printf("4. De-queue/Serve from the end\n");
+       printf("5. Display\n");
+       printf("6. Exit\n");
+
+       printf("Your choice: ");
+       scanf("%i",&choice);
+
+switch(choice)
+	  {
+	    case 1:  printf("Enter the element to be added in the beginning:");
+		     scanf("%i",&info);
+
+		    enqueBeg(info); //Function call for adding at the beginning.
+
+		     getch();
+		     break;
+
+	    case 2:  printf("Enter the element to be added in the end: ");
+		     scanf("%i",&info);
+
+		     enqueEnd(info); //Function call[En-queue/Append in the end]
+
+		     getch();
+		     break;
+
+	    case 3:  dequeueBeg(); //Function call for deleitng from begining.[De-queue/Serve from the beginning]
+
+		     getch();
+		     break;
+
+	    case 4:  dequeueEnd(); //Function call  for deleitng at the end.[De-queue/Serve from the end]
+		     getch();
+		     break;
+
+	    case 5:  display(); //Function call
+		     getch();
+		     break;
+
+	    case 6:  exit();
+                                      break;
+
+	    default: printf("You entered wrong choice!");
+		     getch();
+	  }
+     }
+}
+
+
+void initdeque()//initialising the deque. 
+{
+   front=rear=-1;
+}
+
+
+void enqueBeg()
+{
+   int i,info;
+
+
+   //If dequeue is empty then first element can be simply added
+   if(front==-1)
+      {
+	front=rear=0;//both fornt,rear point to first element. 
+
+	deque[front]=info;
+
+      }
+
+   //If the deque is full from the front only...
+   if(front==0 && rear!=5-1)
+      {
+	//...shift the elements from 1 posn to it's right
+	for(i=rear;i>=front;i--)
+	   deque[i+1]=deque[i];
+
+	//Index no. of last element should be incremented after shifting
+       rear++;
+	
+        //New element will be added in the front of deque
+	deque[front]=info;
+
+      }
+
+
+   //if the deque is empty from the front...
+   else if(front>0)
+      {
+	front--;
+
+	//...new element will be accomodated in the empty cell
+	deque[front]=info;
+      }
+
+}
+
+
+void enqueEnd()
+{
+   int i,info;
+
+   //If dequeue is empty then first element can be simply added
+   if(front==-1)
+      {
+	front=rear=0;
+	deque[front]=info;
+
+      }
+
+   //If the deque is full from the end only...
+   if(front!=0 && rear==5-1)
+      {
+	//...shift the elements from 1 posn to its left
+	for(i=front;i<=rear;i++)
+	   deque[i-1]=deque[i];
+
+
+	//Index no. of first element should be decremented after shifting
+	front++;
+
+	//New element will be added in the end of deque
+	deque[rear]=info;
+      }
+
+   //if the deque is empty from the end...
+   else if(rear<5-1)
+      {
+	rear++;
+	//...new element will be accomodated in the empty cell
+	deque[rear]=info;
+      }
+   return 1;
+}
+
+
+void dequeueBeg()
+{
+   int info;
+
+   //If the deque is empty...
+   if(front==-1)
+      {
+	return 0; //End of function
+      }
+
+   //Else
+   //Extracting info & setting flag
+   info=deque[front];
+   deque[front]=0;
+
+   //Setting front
+   if(front==rear)
+      front=rear=-1; //As the deque will become empty
+
+   else
+      front++; //Front cell is unoccupied now
+
+   return info; //Returning the info
+}
+
+
+void dequeueEnd()
+{
+   int info;
+
+   //If the deque is empty...
+   if(front==-1)
+      {
+	return 0; //End of function
+      }
+
+   //Else
+   //Extracting info & setting flag
+   info=deque[rear];
+
+deque[rear]=0;
+
+   //Setting rear
+   if(front==rear)
+           front=rear=-1; //As the deque will become empty
+   else
+      rear--; //Rear cell is unoccupied now
+
+   return info; //Returning the info
+}
+
+
+/*displays the curent position of the dqueue*/
+void display ()
+{
+   int i;
+
+   //Displaying the deque elments
+   for(i=front;i<=rear;i++)
+      printf("%i\n",deque[i]);
+}
+
+
+/*output of the program*/
+ MENU
+1. En-queue/Append in the beginning
+2. En-queue/Append in the end
+3. De-queue/Serve from the beginning
+4. De-queue/Serve from the end
+5. Display
+Your choice
+1
+
+enter the element to be added at the beginning
+5
+        MENU
+1. En-queue/Append in the beginning
+2. En-queue/Append in the end
+3. De-queue/Serve from the beginning
+4. De-queue/Serve from the end
+5. Display
+6. Exit
+Your choice:
+2
+
+enter the element to be added at the end
+50
+
+
+
+        MENU
+1. En-queue/Append in the beginning
+2. En-queue/Append in the end
+3. De-queue/Serve from the beginning
+4. De-queue/Serve from the end
+5. Display
+6. Exit
+Your choice:
+3
+
+enter the element to be deleted from the beginning
+5
+
+
+        MENU
+1. En-queue/Append in the beginning
+2. En-queue/Append in the end
+3. De-queue/Serve from the beginning
+4. De-queue/Serve from the end
+5. Display
+6. Exit
+Your choice:
+4
+
+enter the element to be deleted from the end
+50
+
+
+        MENU
+1. En-queue/Append in the beginning
+2. En-queue/Append in the end
+3. De-queue/Serve from the beginning
+4. De-queue/Serve from the end
+5. Display
+6. Exit
+Your choice:
+6

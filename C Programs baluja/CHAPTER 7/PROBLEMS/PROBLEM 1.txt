@@ -1,0 +1,61 @@
+#include <stdio.h>
+#define Black 2
+# define max 20
+typedef struct node_type
+	{
+		int vertex;
+		struct node_type *link;
+	}	node;
+
+	typedef struct queue_type
+	{
+		int info;
+		struct queue_type *next;
+	}	queue;
+	void main (void)
+	{
+		node*adj[Max];
+		int n,s;
+		clrscr() ;
+		printf("Enter No. of Nodes:");
+		scanf ("%d", & n);
+		create_graph (adj, n);
+		input_graph(adj, n);
+		clrscr();
+		printf ("enter source vcr tax");
+		scanf ("%d" , &s);
+		printf ("bfs from vertax")
+		bfs (adj, n,s);
+		getch();
+	}
+	void create_graph (node * adj[], int num)
+	{
+		int i ;
+		for (i=1; i<=num; i++)
+			adj[i] =Null;
+	}
+	void bfs(node * adj[], int n, int s)
+	{
+		node *ptr;
+		queue*front, *rear;
+		int i, color(max);
+		create_empty_Queue (&front, &rear);
+		for (i=1; i<=n; i++) color[i]=white;
+		color(s)=Gray;
+		enqueue(&front, &rear, s);
+		while (!empty(front))
+		{
+			v=head[front);
+			ptr=adj[u];
+			v=ptr->vertex;
+			if (color[v]=white)
+			{
+				color[v] =gray;
+				enqueue (&front, &rear,v);
+			}
+				ptr= ptr->link;
+		}
+			v=dequeue(&front, &rear);
+			printf("%d", u);
+			color[u]= Black;
+	}
